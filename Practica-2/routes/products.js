@@ -34,4 +34,28 @@ router.post('/', (req, res) => {
     })
 })
 
+router.put('/:sku', (req, res) => {
+    if(!req.body || !req.params.sku) {
+        return res.status(400).json({
+            message: 'Product data or sku param mandatory'
+        })
+    }
+    const productIndex = products.findIndex(elem => {
+        return elem.sku === req.params.sku;
+    })
+    if (productIndex < 0) {
+        return res.status(404).json({
+            mensaje: 'No se encontró ningún producto con ese sku'
+        })
+    }
+    for (const property in req.body) {
+        console.log(property);
+        products[productIndex][property] = req.body[property]
+    }
+    res.status(200).json({
+        message: 'Ok',
+        product: products[productIndex]
+    })
+})
+
 export default router;
