@@ -7,6 +7,11 @@ import users from './routes/users.js';
 
 app.use('/products', products);
 app.use('/users', users);
+app.use('/*', (req, res) => {
+    res.status(404).json({
+        message: 'Incorrect route or params',
+    })
+})
 
 app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}`);
