@@ -58,4 +58,25 @@ router.put('/:sku', (req, res) => {
     })
 })
 
+router.delete('/:sku', (req, res) => {
+    if (!req.params.sku) {
+        return res.status(400).json({
+            message: 'sku params mandatory'
+        })
+    }
+    const productIndex = products.findIndex(elem => {
+        return elem.sku === req.params.sku;
+    })
+    if (productIndex < 0) {
+        return res.status(404).json({
+            mensaje: 'No se encontró ningún producto con ese sku'
+        })
+    }
+    const deletedProduct = products.splice(productIndex, 1);
+    res.status(200).json({
+        message: 'Ok',
+        deletedProduct
+    })
+})
+
 export default router;
