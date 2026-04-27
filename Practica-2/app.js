@@ -4,6 +4,8 @@ const port = 3000;
 
 import products from './routes/products.js';
 
+app.use(express.json());
+
 app.use('/products', products);
 app.use((req, res) => {
     res.status(404).json({

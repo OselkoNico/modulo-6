@@ -21,4 +21,17 @@ router.get('/search', (req, res) => {
     })
 });
 
+router.post('/', (req, res) => {
+    if(!req.body) {
+        return res.status(400).json({
+            message: 'Product data mandatory'
+        })
+    }
+    products.push(req.body);
+    res.status(200).json({
+        message: 'Ok',
+        product: products[products.length - 1]
+    })
+})
+
 export default router;
