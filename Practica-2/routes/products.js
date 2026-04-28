@@ -7,6 +7,72 @@ const products = [
     {sku: 'B033', item: 'Xiaomi Redmi 9', brand: 'Xiaomi', description: 'Lorem ipsum...'},
 ]
 
+/**
+ * @swagger
+ * tags:
+ *  name: Products
+ *  description: Products API REST
+ */
+
+/**
+ * @swagger
+ *  components:
+ *      schemas:
+ *          Product:
+ *              type: object
+ *              required:
+ *                  - sku
+ *                  - item
+ *                  - brand
+ *              properties:
+ *                  sku:
+ *                      type: string
+ *                      description: Unique identifier
+ *                  item:
+ *                      type: string
+ *                      description: product name
+ *                  brand:
+ *                      type: string
+ *                      description: manufacturer name
+ *                  description:
+ *                      type: string
+ *                      description: product details
+ */
+
+/**
+ * @swagger
+ * /products/search:
+ *   get:
+ *     summary: Return products matched by brand
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: brand
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Brand name to filter
+ *     responses:
+ *       200:
+ *         description: List of products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Ok
+ *                 products:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: Incorrect query params
+ *       500:
+ *         description: Server error
+ */
+
 router.get('/search', (req, res) => {
     if(!req.query.brand) {
         return res.status(400).json({
@@ -20,6 +86,40 @@ router.get('/search', (req, res) => {
         products: selectProducts
     })
 });
+
+/**
+ * @swagger
+ * /products:
+ *   post:
+ *     summary: Create new product
+ *     tags: [Products]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Product'
+ *
+ *     responses:
+ *       200:
+ *         description: Product created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: created
+ *                 product:
+ *                   $ref: '#/components/schemas/Product'
+ *
+ *       400:
+ *         description: Product data mandatory
+ *
+ *       500:
+ *         description: Server error
+ */
 
 router.post('/', (req, res) => {
     if(!req.body) {
