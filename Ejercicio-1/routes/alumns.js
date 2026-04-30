@@ -7,7 +7,7 @@ const alumns = [
     { name: "Antonio", surname: "Benitez Royal", age: "21" }
 ]
 
-router.get('/alumnos', (req, res) => {
+router.get('/', (req, res) => {
     if (!req.query.name) {
         return res.status(400).json({
             message: 'Incorrect query params'
