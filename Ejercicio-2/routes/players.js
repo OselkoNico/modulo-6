@@ -20,3 +20,26 @@ router.get('/', (req, res) => {
         jugadores: devolverJugadores
     })
 })
+
+router.post('/', (req, res) => {
+    const { name, surname, age } = req.body;
+
+    if(!name || !surname || age === undefined) {
+        return res.status(400).json({
+            message: 'Missing required fields'
+        });
+    }
+    const ageNumber = Number(age);
+
+    if(isNaN(ageNumber)) {
+        return res.status(400).json({
+            message: 'Age must be a number'
+        });
+    }
+    const newPlayer = { name, surname, age: ageNumber };
+    players.push(newPlayer);
+    res.status(200).json({
+        message: 'Ok',
+        jugador: newPlayer
+    })
+})
