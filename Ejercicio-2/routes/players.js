@@ -43,3 +43,5 @@ router.post('/', (req, res) => {
         jugador: newPlayer
     })
 })
+
+export default router;
