@@ -4,6 +4,7 @@ const port = 3000;
 
 import players from './routes/players.js';
 
+app.use(express.json());
 app.use('/players', players);
 
 app.use((req, res) => {
